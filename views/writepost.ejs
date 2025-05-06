@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Inventory | FoodChain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .bg-gradient-custom {
+            background: linear-gradient(135deg, #22c55e, #059669);
+        }
+        .hover-scale {
+            transition: transform 0.2s;
+        }
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Hero Section with enhanced gradient and animation -->
+    <div class="bg-gray-900 text-white p-6"> <header class="flex justify-between items-center container mx-auto">
+        <div class="flex items-center space-x-2">
+            <div class="text-3xl font-bold">Food</div>
+            <div class="text-green-500 text-3xl font-bold">Chain</div>
+        </div>
+
+        <nav class="flex space-x-8 items-center">  <a href="/" class="text-white hover:text-green-400">Home</a>
+            <a href="/add/inventory" class="text-white hover:text-green-400">Add Inventory</a>
+            <a href="/read/inventory" class="px-3 py-1 rounded text-white hover:bg-green-700">Show Inventory</a>
+           
+            <a href="/donate" class="text-white hover:text-green-400">Donate Food</a>
+            <a href="/donations" class="text-white hover:text-green-400">Available Food</a>
+           
+            </nav>
+            <div class="relative">
+                <button onclick="toggleDropdown()" class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center hover:bg-green-600 focus:outline-none">
+                    <span class="text-lg font-bold"><%= userinfo.name.charAt(0) %></span>
+                </button>
+                
+                <!-- Dropdown Menu -->
+                <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-gray-800 z-50">
+                    <a href="/profile/<%= userinfo.user_id %>" class="block px-4 py-2 hover:bg-gray-100">
+                        <i class="fas fa-user mr-2"></i>Profile
+                    </a>
+                    <a href="/mydonations" class="block px-4 py-2 hover:bg-gray-100">
+                        <i class="fas fa-gift mr-2"></i>My Donations
+                    </a>
+                    <hr class="my-1 border-gray-200">
+                    <a href="/logout" class="block px-4 py-2 text-red-600 hover:bg-gray-100">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </a>
+                </div>
+            </div> <script>
+                function toggleDropdown() {
+                    const dropdown = document.getElementById('profileDropdown');
+                    dropdown.classList.toggle('hidden');
+                
+                    // Close dropdown when clicking outside
+                    document.addEventListener('click', function(event) {
+                        const isClickInside = dropdown.parentElement.contains(event.target);
+                        if (!isClickInside && !dropdown.classList.contains('hidden')) {
+                            dropdown.classList.add('hidden');
+                        }
+                    });
+                }
+                </script>
+    </header>
+</div>
+    <div class="container mx-auto px-4 py-8">
+       
+
+        <!-- Enhanced Main Form -->
+        <div class="bg-white rounded-xl shadow-xl p-8 max-w-4xl mx-auto hover-scale transition-all duration-300">
+            <form action="/add/inventory" method="post" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <input type="hidden" name="userId" value="<%= userinfo._id %>">
+
+                <!-- Left Column -->
+                <div class="space-y-6">
+                    <div class="group">
+                        <label class="block text-gray-700 font-bold mb-2 group-hover:text-green-600 transition-colors duration-200">Item Name</label>
+                        <input type="text" name="name" placeholder="Enter item name" 
+                               class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 hover:shadow-md">
+                    </div>
+
+                    <div class="group">
+                        <label class="block text-gray-700 font-bold mb-2 group-hover:text-green-600 transition-colors duration-200">Category</label>
+                        <input type="text" name="category" placeholder="e.g., Fruits, Vegetables, Grains" 
+                               class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 hover:shadow-md">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="group">
+                            <label class="block text-gray-700 font-bold mb-2 group-hover:text-green-600 transition-colors duration-200">Quantity</label>
+                            <input type="number" name="quantity" 
+                                   class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 hover:shadow-md">
+                        </div>
+                        <div class="group">
+                            <label class="block text-gray-700 font-bold mb-2 group-hover:text-green-600 transition-colors duration-200">Unit</label>
+                            <select name="unit" 
+                                    class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 hover:shadow-md">
+                                <option value="kg">Kilograms (kg)</option>
+                                <option value="pieces">Pieces</option>
+                                <option value="liters">Liters</option>
+                                <option value="packets">Packets</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="group">
+                            <label class="block text-gray-700 font-bold mb-2 group-hover:text-green-600 transition-colors duration-200">Purchase Date</label>
+                            <input type="date" name="purchaseDate" 
+                                   class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 hover:shadow-md">
+                        </div>
+                        <div class="group">
+                            <label class="block text-gray-700 font-bold mb-2 group-hover:text-green-600 transition-colors duration-200">Expiry Date</label>
+                            <input type="date" name="expiryDate" 
+                                   class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 hover:shadow-md">
+                        </div>
+                    </div>
+
+                    <div class="        <label class="block text-gray-700 font-bold mb-2 group-hover:text-green-600 transition-colors duration-200">Status</label>
+                        <select name="status" 
+                                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 hover:shadow-md">
+                            <option value="active">Active</option>
+                            <option value="expired">Expired</option>
+                            <option value="consumed">Consumed</option>
+                            <option value="donated">Donated</option>
+                        </select>
+                    </div>
+
+                    <div class="group">
+                        <label class="block text-gray-700 font-bold mb-2 group-hover:text-green-600 transition-colors duration-200">Price</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-3 text-gray-500">₹</span>
+                            <input type="number" name="price" placeholder="0.00" 
+                                   class="w-full p-3 pl-8 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 hover:shadow-md">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enhanced Submit Button -->
+                <div class="col-span-1 md:col-span-2">
+                    <button type="submit" 
+                            class="w-full bg-gradient-custom text-white font-bold py-4 px-6 rounded-lg hover:opacity-90 transition-all duration-300 transform hover:scale-[1.01] shadow-lg">
+                        Add to Inventory
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Enhanced Success Message Popup -->
+        <% if (typeof message !== 'undefined' && message) { %>
+            <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white rounded-xl p-8 max-w-md transform transition-all duration-300 hover:scale-105">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Message</h2>
+                    <p class="text-gray-600"><%= message %></p>
+                    <button onclick="this.parentElement.parentElement.classList.add('hidden')" 
+                            class="mt-6 bg-gradient-custom text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 w-full transition-all duration-200">
+                        Close
+                    </button>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Food Donation | FoodChain</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .donation-form {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .bg-gradient-custom {
+            background: linear-gradient(to right, #22c55e, #059669);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 text-white p-6"> <header class="flex justify-between items-center container mx-auto">
+        <div class="flex items-center space-x-2">
+            <div class="text-3xl font-bold">Food</div>
+            <div class="text-green-500 text-3xl font-bold">Chain</div>
+        </div>
+
+        <nav class="flex space-x-8 items-center">  <a href="/" class="text-white hover:text-green-400">Home</a>
+            <a href="/add/inventory" class="text-white hover:text-green-400">Add Inventory</a>
+            <a href="/read/inventory" class="px-3 py-1 rounded text-white hover:bg-green-700">Show Inventory</a>
+           
+            <a href="/donate" class="text-white hover:text-green-400">Donate Food</a>
+            <a href="/donations" class="text-white hover:text-green-400">Available Food</a>
+           
+            </nav>
+            <div class="relative">
+                <button onclick="toggleDropdown()" class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center hover:bg-green-600 focus:outline-none">
+                    <span class="text-lg font-bold"><%= userinfo.name.charAt(0) %></span>
+                </button>
+                
+                <!-- Dropdown Menu -->
+                <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-gray-800 z-50">
+                    <a href="/profile/<%= userinfo.user_id %>" class="block px-4 py-2 hover:bg-gray-100">
+                        <i class="fas fa-user mr-2"></i>Profile
+                    </a>
+                    <a href="/mydonations" class="block px-4 py-2 hover:bg-gray-100">
+                        <i class="fas fa-gift mr-2"></i>My Donations
+                    </a>
+                    <hr class="my-1 border-gray-200">
+                    <a href="/logout" class="block px-4 py-2 text-red-600 hover:bg-gray-100">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </a>
+                </div>
+            </div>
+    </header>
+    <script>
+        function toggleDropdown() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.classList.toggle('hidden');
+        
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                const isClickInside = dropdown.parentElement.contains(event.target);
+                if (!isClickInside && !dropdown.classList.contains('hidden')) {
+                    dropdown.classList.add('hidden');
+                }
+            });
+        }
+        </script>
+</div>
+    <div class="bg-gradient-custom text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Create Food Donation</h1>
+            <p class="text-xl">Share your surplus food with those in need</p>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-6 py-8">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <form action="/donate" method="POST">
+                <!-- Donor Type -->
+                
+
+               
+                <!-- Food Items -->
+                <div class="mb-8">
+                    <label class="block text-gray-700 font-bold mb-4">Food Items</label>
+                    <div id="foodItems">
+                        <div class="grid md:grid-cols-3 gap-4 mb-4">
+                            <input type="text" class="p-3 border rounded-lg" name="foodName" placeholder="Food Name" required>
+                            <input type="number" class="p-3 border rounded-lg" name="quantity" placeholder="Quantity" required>
+                            <select class="p-3 border rounded-lg" name="unit" required>
+                                <option value="pieces">Pieces</option>
+                                <option value="kg">Kilograms</option>
+                                <option value="liters">Liters</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" onclick="addFoodItem()" class="mt-4 text-green-700 font-bold hover:text-green-800">
+                        + Add More Items
+                    </button>
+                </div>
+
+              
+
+                <!-- Pickup Address -->
+                <div class="mb-8"> 
+                    <label class="block text-gray-700 font-bold mb-2">Pickup Address</label>
+                    <button
+                        type="button"
+                        id="locationButton"
+                        onclick="fetchLocation()"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Use Current Location
+                    </button>
+                    <div class="mt-4">
+                        <label class="block text-gray-700 font-bold mb-2">Latitude</label>
+                        <input
+                            type="text"
+                            id="latitude"
+                            name="latitude"
+                            class="w-full p-3 border rounded-lg"
+                            readonly
+                            required
+                        />
+                    </div>
+                    <div class="mt-4">
+                        <label class="block text-gray-700 font-bold mb-2">Longitude</label>
+                        <input
+                            type="text"
+                            id="longitude"
+                            name="longitude"
+                            class="w-full p-3 border rounded-lg"
+                            readonly
+                            required
+                        />
+                    </div>
+                </div>
+                
+                <script>
+                    function fetchLocation() {
+                        const locationButton = document.getElementById("locationButton");
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(
+                                function(position) {
+                                    // Update the latitude and longitude fields
+                                    document.getElementById("latitude").value = position.coords.latitude;
+                                    document.getElementById("longitude").value = position.coords.longitude;
+                                    
+                                    // Change button text and color to indicate success
+                                    locationButton.textContent = "Location Fetched!";
+                                    locationButton.classList.remove("bg-blue-500", "hover:bg-blue-700");
+                                    locationButton.classList.add("bg-green-500", "hover:bg-green-700");
+                                },
+                                function(error) {
+                                    alert("Unable to retrieve your location. Please enable location services and try again.");
+                                }
+                            );
+                        } else {
+                            alert("Geolocation is not supported by this browser.");
+                        }
+                    }
+                </script>
+                
+                <!-- Status -->
+                <div class="mb-8">
+                    <label class="block text-gray-700 font-bold mb-2">Donation Status</label>
+                    <select class="w-full p-3 border rounded-lg" name="status" required>
+                        <option value="active">Active</option>
+                        <option value="reserved">Reserved</option>
+                        <option value="collected">Collected</option>
+                        <option value="for_compost">For Compost</option>
+                        <option value="composted">Composted</option>
+                    </select>
+                </div>
+
+                <!-- Additional Notes -->
+                <div class="mb-8">
+                                    <label class="block text-gray-700 font-bold mb-2">Additional Notes</label>
+                    <textarea class="w-full p-3 border rounded-lg" name="notes" rows="2"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-custom text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition">
+                    Submit Donation
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function addFoodItem() {
+            const foodItems = document.getElementById('foodItems');
+            const newItem = document.createElement('div');
+            newItem.className = 'grid md:grid-cols-3 gap-4 mb-4';
+            newItem.innerHTML = `
+                <input type="text" class="p-3 border rounded-lg" name="food_name[]" placeholder="Food Name" required>
+                <input type="number" class="p-3 border rounded-lg" name="quantity[]" placeholder="Quantity" required>
+                <select class="p-3 border rounded-lg" name="unit[]" required>
+                    <option value="pieces">Pieces</option>
+                    <option value="kg">Kilograms</option>
+                    <option value="liters">Liters</option>
+                </select>
+                <button type="button" class="bg-red-500 text-white px-4 rounded-lg" onclick="this.parentElement.remove()">×</button>
+            `;
+            foodItems.appendChild(newItem);
+        }
+    </script>
+</body>
+</html>

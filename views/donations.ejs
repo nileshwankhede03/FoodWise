@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Donations | FoodChain</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .bg-gradient-custom {
+            background: linear-gradient(to right, #22c55e, #059669);
+        }
+        .donation-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .donation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .search-container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="bg-gray-900 text-white p-6">
+        <header class="flex justify-between items-center container mx-auto">
+            <div class="flex items-center space-x-2">
+                <div class="text-3xl font-bold">Food</div>
+                <div class="text-green-500 text-3xl font-bold">Chain</div>
+            </div>
+    
+            <nav class="flex space-x-8 items-center">
+                <a href="/" class="text-white hover:text-green-400">Home</a>
+                <a href="/add/inventory" class="text-white hover:text-green-400">Add Inventory</a>
+                <a href="/read/inventory" class="px-3 py-1 rounded text-white hover:bg-green-700">Show Inventory</a>
+                <a href="/donate" class="text-white hover:text-green-400">Donate Food</a>
+                <a href="/donations" class="text-white hover:text-green-400">Available Food</a>
+                
+                <!-- Profile Dropdown -->
+                <div class="relative">
+                    <button onclick="toggleDropdown()" class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center hover:bg-green-600 focus:outline-none">
+                        <span class="text-lg font-bold"><%= userinfo.name.charAt(0) %></span>
+                    </button>
+                    
+                    <!-- Dropdown Menu -->
+                    <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-gray-800 z-50">
+                        <a href="/profile/<%= userinfo.user_id %>" class="block px-4 py-2 hover:bg-gray-100">
+                            <i class="fas fa-user mr-2"></i>Profile
+                        </a>
+                        <a href="/mydonations" class="block px-4 py-2 hover:bg-gray-100">
+                            <i class="fas fa-gift mr-2"></i>My Donations
+                        </a>
+                        <hr class="my-1 border-gray-200">
+                        <a href="/logout" class="block px-4 py-2 text-red-600 hover:bg-gray-100">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </div>
+    
+    <!-- Add this script at the end of your body tag -->
+    <script>
+    function toggleDropdown() {
+        const dropdown = document.getElementById('profileDropdown');
+        dropdown.classList.toggle('hidden');
+    
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const isClickInside = dropdown.parentElement.contains(event.target);
+            if (!isClickInside && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+            }
+        });
+    }
+    </script>
+    
+    <!-- Add Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Add these styles to your existing CSS -->
+    <style>
+        /* Animation for dropdown */
+        #profileDropdown {
+            transform-origin: top right;
+            transition: all 0.2s ease-out;
+        }
+    
+        #profileDropdown:not(.hidden) {
+            animation: slideDown 0.2s ease-out;
+        }
+    
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+    </style>
+    
+    <!-- Hero Section with Search -->
+    <div class="bg-gradient-custom text-white py-12 relative">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Available Food Donations</h1>
+            <p class="text-xl mb-8">Find and reserve available food donations in your area</p>
+            
+            <!-- Search and Filter Section -->
+            <div class="search-container max-w-4xl mx-auto rounded-lg p-4">
+                <div class="grid md:grid-cols-4 gap-4">
+                    <input type="text" placeholder="Search donations..." class="w-full p-2 rounded-lg border text-gray-800">
+                    <select class="w-full p-2 rounded-lg border text-gray-800">
+                        <option>All Food Types</option>
+                        <option>Vegetables</option>
+                        <option>Grains</option>
+                        <option>Prepared Food</option>
+                    </select>
+                    <select class="w-full p-2 rounded-lg border text-gray-800">
+                        <option>All Locations</option>
+                        <option>Within 5 km</option>
+                        <option>Within 10 km</option>
+                        <option>Within 20 km</option>
+                    </select>
+                    <button class="bg-green-700 text-white rounded-lg hover:bg-green-800">
+                        <i class="fas fa-search mr-2"></i> Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-8">
+        <!-- View Toggle -->
+        <div class="flex justify-end mb-6">
+            <button class="mr-4 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md">
+                <i class="fas fa-th-large mr-2"></i> Grid View
+            </button>
+            <button class="px-4 py-2 bg-white rounded-lg shadow hover:shadow-md">
+                <i class="fas fa-map-marker-alt mr-2"></i> Map View
+            </button>
+        </div>
+
+        <!-- Donations Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Loop through donations and create donation cards dynamically -->
+            <% donations.forEach(donation => { %>
+            <div class="bg-white rounded-lg shadow-lg p-6 donation-card">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                            <%= donation.status.charAt(0).toUpperCase() + donation.status.slice(1) %>
+                        </span>
+                        <h3 class="text-xl font-bold mt-2"><%= donation.foodName %></h3>
+                    </div>
+                    <span class="text-gray-500 text-sm"><%= donation.timestamp %></span>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="flex items-center text-gray-700">
+                        <i class="fas fa-user mr-3"></i>
+                        <span><strong>Donor:</strong> <%= donation.donorName %></span>
+                    </div>
+                    <div class="flex items-center text-gray-700">
+                        <i class="fas fa-weight-hanging mr-3"></i>
+                        <span><strong>Quantity:</strong> <%= donation.quantity %> <%= donation.unit %></span>
+                    </div>
+                    <div class="flex items-center text-gray-700">
+                        <i class="fas fa-weight-hanging mr-3"></i>
+                        <span><strong>Contact No:</strong> <%= donation.contactno %></span>
+                    </div>
+                    <div class="flex items-center text-gray-700">
+                        <i class="fas fa-map-marker-alt mr-3"></i>
+                        <span><strong>Location:</strong> <%= donation.address %>, <%= donation.coordinates.longitude %></span>
+                    </div>
+                    <!-- In your donations card, replace the form with this -->
+<a href="/map-view/<%= donation._id %>" class="w-full mt-6 bg-gradient-custom text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition flex items-center justify-center">
+    <i class="fas fa-map-marker-alt mr-2"></i>
+    View on Map
+</a>
+
+                    
+                </div>
+
+                <!-- Reservation Form -->
+                <form action="/reserve/<%= donation._id %>" method="POST">
+                    <% if (donation.status === 'reserved') { %>
+                        <button type="submit" disabled class="w-full text-white p-3 rounded-md bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50">
+                            Food Already Reserved
+                        </button>
+                    <% } else { %>
+                        <button class="w-full mt-6 bg-gradient-custom text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition flex items-center justify-center">
+                            <i class="fas fa-hand-holding-heart mr-2"></i>
+                            Reserve Food
+                        </button>
+                    <% } %>
+                </form>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+
+</body>
+</html>

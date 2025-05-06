@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body>
+    <div class="min-h-screen flex">
+        <!-- Image Section -->
+        <div>
+            <img src="/images/login.png" alt="Login to FoodChain" class="" />
+        </div>
+
+        <!-- Form Section -->
+        <div
+            class="w-full lg:w-1/2 flex items-center justify-center px-8 py-12 bg-gradient-to-br from-green-50 to-emerald-100">
+            <div class="max-w-md w-full space-y-8">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-2">Welcome Back to FoodChain</h2>
+                    <p class="text-gray-600">Log in to continue reducing food waste</p>
+                </div>
+
+                <form action="/login" method="POST" class="mt-8 space-y-6">
+                    <div class="space-y-4">
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">
+                                Email Address *
+                            </label>
+                            <input id="email" name="email" type="email" required
+                                class="mt-1 block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                placeholder="you@example.com" />
+                        </div>
+
+                        <!-- Password -->
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700">
+                                Password *
+                            </label>
+                            <input id="password" name="password" type="password" required
+                                class="mt-1 block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                placeholder="••••••••" />
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        Log In
+                    </button>
+
+                    <div class="text-center text-sm text-gray-600">
+                        Don't have an account?
+                        <a href="/signup" class="font-medium text-green-600 hover:text-green-500">
+                            Sign up
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

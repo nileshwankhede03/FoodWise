@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodChain | Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="bg-gray-900 text-white p-6">
+        <header class="flex justify-between items-center container mx-auto">
+            <div class="flex items-center space-x-2">
+                <div class="text-3xl font-bold">Food</div>
+                <div class="text-green-500 text-3xl font-bold">Chain</div>
+            </div>
+            <nav class="flex space-x-8 items-center">  <a href="/" class="text-white hover:text-green-400">Home</a>
+                
+               <a href="/signup" class="bg-green-600 px-3 py-1 rounded text-white hover:bg-green-700">Sign Up</a>
+                <a href="/login" class="bg-green-600 px-3 py-1 rounded text-white hover:bg-green-700">Log In</a>
+            </nav>
+        </header>
+    </div>
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r flex from-green-500 to-emerald-700 text-white">
+        <div class="container mx-auto px-6 py-20">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">Welcome to FoodChain</h1>
+            <p class="text-xl md:text-2xl mb-8">Reducing Food Waste, One Meal at a Time</p>
+            <a href="/get-started"
+                class="bg-white text-green-700 px-8 py-3 rounded-full font-bold hover:bg-opacity-90 transition inline-block">
+                Get Started
+            </a>
+        </div>
+        <div>
+            <img src="/images/main.png" alt="Hero Image">
+        </div>
+    </div>
+
+    <!-- Navbar Section -->
+    
+
+    <!-- Objectives Section -->
+    <div class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12">Our Objectives</h2>
+            <div class="grid md:grid-cols-3 text-center gap-8">
+                <% const objectives=[ { title: 'Reduce Food Waste' ,
+                    description: 'Track and manage food inventory to minimize waste at home and businesses' ,
+                    image: '/images/1.png' }, { title: 'Connect Communities' ,
+                    description: 'Bridge the gap between food surplus and scarcity through efficient donation systems' ,
+                    image: '/images/2.png' }, { title: 'Environmental Impact' ,
+                    description: 'Reduce greenhouse gas emissions by preventing food from reaching landfills' ,
+                    image: '/images/3.png' } ] %>
+
+                    <% objectives.forEach(objective=> { %>
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <div class="mb-4 flex justify-center">
+                                <img src="<%= objective.image %>" alt="<%= objective.title %>"
+                                    class="w-20 h-20 object-contain">
+                            </div>
+                            <h3 class="text-xl font-bold mb-4">
+                                <%= objective.title %>
+                            </h3>
+                            <p class="text-gray-600">
+                                <%= objective.description %>
+                            </p>
+                        </div>
+                        <% }) %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Who Are You Section -->
+    <div class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12">Who Are You?</h2>
+            <div class="grid md:grid-cols-4 gap-8">
+                <% const roles=[ { role: 'Household' ,
+                    description: 'Track your groceries and reduce household food waste' }, { role: 'Business Owner' ,
+                    description: 'Manage inventory and create discount offers for near-expiry items' }, {
+                    role: 'Food Donor' , description: 'Connect with local communities to donate surplus food' }, {
+                    role: 'Food Receiver' , description: 'Access available food donations in your area' } ] %>
+
+                    <% roles.forEach(role=> { %>
+                        <div class="bg-gray-50 p-6 rounded-lg text-center hover:shadow-lg transition">
+                            <h3 class="text-xl font-bold mb-4 text-green-700">
+                                <%= role.role %>
+                            </h3>
+                            <p class="text-gray-600">
+                                <%= role.description %>
+                            </p>
+                            <a href="/learn-more" class="mt-4 text-green-600 font-semibold inline-block">Learn More
+                                →</a>
+                        </div>
+                        <% }) %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12">Key Features</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <% const features=[ { title: 'Smart Inventory Tracking' ,
+                    description: 'Log purchased items with expiry dates and receive timely notifications' }, {
+                    title: 'Business Discount Management' ,
+                    description: 'Create and manage discount offers for near-expiry items' }, {
+                    title: 'Food Donation Platform' ,
+                    description: 'Connect donors with local food banks and those in need' }, {
+                    title: 'Recipe Suggestions' ,
+                    description: 'Get creative recipes based on your available ingredients' }, {
+                    title: 'Impact Tracking' , description: 'Monitor your contribution to reducing food waste' }, {
+                    title: 'Community Building' , description: 'Join a network of conscious individuals and businesses'
+                    } ] %>
+
+                    <% features.forEach(feature=> { %>
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <h3 class="text-xl font-bold mb-4 text-green-700">
+                                <%= feature.title %>
+                            </h3>
+                            <p class="text-gray-600">
+                                <%= feature.description %>
+                            </p>
+                        </div>
+                        <% }) %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Join Community Section -->
+    <div class="py-16 bg-green-700 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-8">Join Our Community</h2>
+            <p class="text-xl mb-8">Be part of the solution to reduce food waste and help those in need</p>
+            <form action="/join-community" method="POST" class="max-w-md mx-auto">
+                <div class="flex gap-4">
+                    <input type="email" name="email" placeholder="Enter your email"
+                        class="flex-1 px-4 py-3 rounded-lg text-gray-900">
+                    <button type="submit"
+                        class="bg-white text-green-700 px-6 py-3 rounded-lg font-bold hover:bg-opacity-90">
+                        Join Now
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

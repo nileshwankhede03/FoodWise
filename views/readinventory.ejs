@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Inventory | FoodChain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .bg-gradient-custom {
+            background: linear-gradient(135deg, #22c55e, #059669);
+        }
+    </style>
+    <script>
+        function closePopup() {
+            document.getElementById('expiryPopup').style.display = 'none';
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="bg-gray-900 text-white p-6"> <header class="flex justify-between items-center container mx-auto">
+        <div class="flex items-center space-x-2">
+            <div class="text-3xl font-bold">Food</div>
+            <div class="text-green-500 text-3xl font-bold">Chain</div>
+        </div>
+
+        <nav class="flex space-x-8 items-center">  <a href="/" class="text-white hover:text-green-400">Home</a>
+            <a href="/add/inventory" class="text-white hover:text-green-400">Add Inventory</a>
+            <a href="/read/inventory" class="px-3 py-1 rounded text-white hover:bg-green-700">Show Inventory</a>
+           
+            <a href="/donate" class="text-white hover:text-green-400">Donate Food</a>
+            <a href="/donations" class="text-white hover:text-green-400">Available Food</a>
+           
+            </nav>
+            <div class="relative">
+                <button onclick="toggleDropdown()" class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center hover:bg-green-600 focus:outline-none">
+                    <span class="text-lg font-bold"><%= userinfo.name.charAt(0) %></span>
+                </button>
+                
+                <!-- Dropdown Menu -->
+                <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-gray-800 z-50">
+                    <a href="/profile/<%=userinfo.user_id %>" class="block px-4 py-2 hover:bg-gray-100">
+                        <i class="fas fa-user mr-2"></i>Profile
+                    </a>
+                    <a href="/mydonations" class="block px-4 py-2 hover:bg-gray-100">
+                        <i class="fas fa-gift mr-2"></i>My Donations
+                    </a>
+                    <hr class="my-1 border-gray-200">
+                    <a href="/logout" class="block px-4 py-2 text-red-600 hover:bg-gray-100">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </a>
+                </div>
+            </div> <script>
+                function toggleDropdown() {
+                    const dropdown = document.getElementById('profileDropdown');
+                    dropdown.classList.toggle('hidden');
+                
+                    // Close dropdown when clicking outside
+                    document.addEventListener('click', function(event) {
+                        const isClickInside = dropdown.parentElement.contains(event.target);
+                        if (!isClickInside && !dropdown.classList.contains('hidden')) {
+                            dropdown.classList.add('hidden');
+                        }
+                    });
+                }
+                </script>
+    </header>
+</div>
+    <div class="bg-gradient-custom text-white py-16 shadow-lg">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">My Inventory</h1>
+            <p class="text-xl md:text-2xl opacity-90">Manage your food items efficiently</p>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Enhanced Navigation Bar -->
+        
+        <!-- Enhanced Expiry Warning Popup -->
+        <% if (expiryWarning) { %>
+            <div id="expiryPopup" class="fixed right-4 top-4 p-6 bg-white border-l-4 border-red-500 z-20 shadow-xl rounded-lg transform transition-all duration-300 hover:scale-105 max-w-md">
+                <p class="text-red-700 font-semibold mb-2"><i class="fas fa-exclamation-triangle mr-2"></i><%= expiryWarning.message %></p>
+                <div class="mt-4 flex justify-end gap-2">
+                    <button onclick="closePopup()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200">Close</button>
+                    <a href="/recipes?items=<%= expiryWarning.items.join(',') %>" class="px-4 py-2 bg-gradient-custom text-white rounded-lg hover:opacity-90 transition-all duration-200">See Recipe</a>
+                </div>
+            </div>
+        <% } %>
+
+        <!-- Enhanced Inventory Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <% if(userinfo.foodItem.length > 0) { %>
+                <% userinfo.foodItem.reverse().forEach(function(inventory) { %>
+                    <div class="bg-white rounded-xl shadow-lg p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                        <h1 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">
+                            <%= inventory.name %>
+                        </h1>
+                        <div class="space-y-3 text-gray-600">
+                            <p class="flex justify-between">
+                                <span class="font-semibold">Category:</span>
+                                <span class="text-gray-700"><%= inventory.category %></span>
+                            </p>
+                            <p class="flex justify-between">
+                                <span class="font-semibold">Quantity:</span>
+                                <span class="text-gray-700"><%= inventory.quantity %> <%= inventory.unit %></span>
+                            </p>
+                            <p class="flex justify-between">
+                                <span class="font-semibold">Price:</span>
+                                <span class="text-gray-700">₹<%= inventory.price %></span>
+                            </p>
+                            <p class="flex justify-between">
+                                <span class="font-semibold">Status:</span>
+                                <span class="<%= inventory.status === 'active' ? 'text-green-600' : 'text-red-600' %>">
+                                    <%= inventory.status %>
+                                </span>
+                            </p>
+                            <p class="flex justify-between">
+                                <span class="font-semibold">Expiry Date:</span>
+                                <span class="text-gray-700"><%= inventory.expiryDate.toLocaleDateString() %></span>
+                            </p>
+                        </div>
+                        <div class="mt-6 flex justify-end gap-3">
+                            <a href="/edit/inventory/<%= inventory._id %>" 
+                               class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors duration-200">
+                                <i class="fas fa-edit mr-2"></i>Edit
+                            </a>
+                            <a href="/delete/inventory/<%= inventory._id %>" 
+                               class="px-red-500 text-black bg-green-200 rounded-lg hover:bg-red-600 transition-colors duration-200">
+                                <i class="fas fa-trash mr-2 p-2 mt-1"> Delete</i>
+                            </a>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="col-span-full text-center py-12 text-gray-500">
+                    <i class="fas fa-box-open text-5xl mb-4"></i>
+                    <p class="text-xl">No Inventory items yet</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

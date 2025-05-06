@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error | FoodChain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .bg-gradient-custom {
+            background: linear-gradient(135deg, #22c55e, #059669);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header Section -->
+    <div class="bg-gradient-custom text-white py-16 shadow-lg">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Oops!</h1>
+            <p class="text-xl md:text-2xl opacity-90">Something went wrong</p>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-2xl mx-auto">
+            <div class="bg-white rounded-xl shadow-lg p-8 text-center">
+                <i class="fas fa-exclamation-circle text-red-500 text-5xl mb-4"></i>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Error</h2>
+                <p class="text-gray-600 mb-6"><%= message %></p>
+                <a href="/read/inventory" 
+                   class="inline-flex items-center px-6 py-3 bg-gradient-custom text-white rounded-lg hover:opacity-90 transition-all duration-200">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Back to Inventory
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodChain | Signup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div class="min-h-screen flex">
+    <!-- Image Section -->
+    <div class="w-1/2 hidden lg:flex items-center justify-center">
+        <img
+            src="../images/signup.png"
+            alt="Food Waste Reduction"
+            class="max-w-full h-auto"
+        />
+    </div>
+
+    <!-- Form Section -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center px-8 py-12 bg-gradient-to-br from-green-50 to-emerald-100">
+        <div class="max-w-md w-full space-y-8">
+            <div class="text-center">
+                <h2 class="text-4xl font-bold text-gray-900 mb-2">Join FoodChain</h2>
+                <p class="text-gray-600">Start your journey towards reducing food waste</p>
+            </div>
+
+            <form action="/create" method="POST" class="mt-8 space-y-6">
+                <div class="space-y-4">
+                    <!-- Full Name -->
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700">
+                            Full Name *
+                        </label>
+                        <input
+                            id="name"
+                            name="name"
+                            type="text"
+                            required
+                            class="mt-1 block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            placeholder="John Doe"
+                        />
+                    </div>
+
+                    <!-- Email -->
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">
+                            Email Address *
+                        </label>
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            required
+                            class="mt-1 block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            placeholder="you@example.com"
+                        />
+                    </div>
+
+                    <!-- Password -->
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">
+                            Password *
+                        </label>
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            required
+                            class="mt-1 block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            placeholder="••••••••"
+                        />
+                    </div>
+                    <div>
+                        <label for="cpassword" class="block text-sm font-medium text-gray-700">
+                           Confirm Password *
+                        </label>
+                        <input
+                            id="cpassword"
+                            name="cpassword"
+                            type="password"
+                            required
+                            class="mt-1 block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            placeholder="••••••••"
+                        />
+                    </div>
+
+                    <!-- User Type -->
+                    <div>
+                        <label for="userType" class="block text-sm font-medium text-gray-700">
+                            I am a *
+                        </label>
+                        <select
+                            id="userType"
+                            name="userType"
+                            required
+                            class="mt-1 block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        >
+                            <option value="individual">Individual</option>
+                            <option value="store">Store</option>
+                            <option value="foodbank">Food Bank</option>
+                            <option value="restaurant">Restaurant</option>
+                        </select>
+                    </div>
+
+                    <!-- Contact Number -->
+                    <div>
+                        <label for="contactNo" class="block text-sm font-medium text-gray-700">
+                            Contact Number *
+                        </label>
+                        <input
+                            id="contactNo"
+                            name="contactNo"
+                            type="tel"
+                            required
+                            class="mt-1 block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            placeholder="Your contact number"
+                        />
+                    </div>
+
+                    <!-- Street Address -->
+                    <div>
+                        <label for="streetAddress" class="block text-sm font-medium text-gray-700">
+                            Street Address *
+                        </label>
+                        <input
+                            id="streetAddress"
+                            name="streetAddress"
+                            type="text"
+                            required
+                            class="mt-1 block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            placeholder="Your street address"
+                        />
+                    </div>
+
+                    <!-- City, State, and Pincode -->
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <label for="city" class="block text-sm font-medium text-gray-700">
+                                City *
+                            </label>
+                            <input
+                                id="city"
+                                name="city"
+                                type="text"
+                                required
+                                class="mt-1 block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                placeholder="City"
+                            />
+                        </div>
+
+                        <div>
+                            <label for="state" class="block text-sm font-medium text-gray-700">
+                                State *
+                            </label>
+                            <input
+                                id="state"
+                                name="state"
+                                type="text"
+                                required
+                                class="mt-1 block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                placeholder="State"
+                            />
+                        </div>
+
+                        <div>
+                            <label for="pincode" class="block text-sm font-medium text-gray-700">
+                                Pincode *
+                            </label>
+                            <input
+                                id="pincode"
+                                name="pincode"
+                                type="text"
+                                required
+                                class="mt-1 block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                placeholder="Pincode"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                >
+                    Create Account
+                </button>
+
+                <div class="text-center text-sm text-gray-600 mt-4">
+                    Already have an account?
+                    <a href="/login" class="font-medium text-green-600 hover:text-green-500">
+                        Sign in
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

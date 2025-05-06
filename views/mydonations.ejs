@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Donations | FoodChain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-green-500 to-green-700 text-white py-12">
+        <div class="container mx-auto px-6">
+            <h1 class="text-4xl font-bold">My Donation Impact</h1>
+            <p class="mt-2">Track your contribution to the community</p>
+        </div>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div class="container mx-auto px-6 py-8">
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-gray-500 text-sm">Total Donations</h3>
+                <p class="text-3xl font-bold text-gray-800"><%= user.foodItem.length %></p> <!-- Display food item count -->
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-gray-500 text-sm">People Served</h3>
+                <p class="text-3xl font-bold text-gray-800"><%= user.foodItem.length %></p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-gray-500 text-sm">Food Saved (kg)</h3>
+                <p class="text-3xl font-bold text-gray-800">4</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-gray-500 text-sm">Impact Score</h3>
+                <p class="text-3xl font-bold text-green-600"><%= user.donationPoints %></p>
+            </div>
+        </div>
+
+        <!-- Recent Donations Table -->
+        <div class="bg-white rounded-lg shadow">
+            <div class="p-6">
+                <h3 class="text-lg font-bold text-gray-800 mb-4">Recent Donations</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="text-left text-gray-500 border-b">
+                                <th class="pb-3">Food Item</th>
+                                <th class="pb-3">Quantity</th>
+                                <th class="pb-3">Impact</th>
+                                <th class="pb-3">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% user.foodItem.forEach(function(item) { %> <!-- Loop through the food items -->
+                                <tr class="border-b">
+                                    <td class="py-3"><%= item.name %></td> <!-- Display food item name -->
+                                    <td class="py-3"><%= item.quantity %> kg</td> <!-- Display quantity -->
+                                    <td class="py-3"><%= user.foodItem.length %> people</td> <!-- Display impact -->
+                                    <td class="py-3"><span class="text-green-600">Completed</span></td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Charts code (same as your original code)
+    </script>
+</body>
+</html>
